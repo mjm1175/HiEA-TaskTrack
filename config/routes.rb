@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :projects
+  resources :projects do
+    member do
+      get "tasks/new", to: "projects#new_task", as: :new_task
+      post "tasks", to: "projects#create_task", as: :create_task
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

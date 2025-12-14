@@ -3,7 +3,7 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
 
-  STATUSES = %w[pending active archived].freeze
+  STATUSES = %w[todo in_progress done].freeze
 
   validates :status,
     presence: true,

@@ -3,8 +3,20 @@
 <%= render @project %>
 
 <div>
+  <h2>Tasks</h2>
+  <ul>
+    <% @tasks.each do |task| %>
+      <li>
+        Task #<%= task.id %> - Status: <%= task.status %>
+      </li>
+    <% end %>
+  </ul>
+
   <%= link_to "Edit this project", edit_project_path(@project) %> |
+  <%= link_to "Add new task to this project", new_task_project_path(@project) %> |
+  <%= button_to "Destroy this project", @project, method: :delete %>
+
   <%= link_to "Back to projects", projects_path %>
 
-  <%= button_to "Destroy this project", @project, method: :delete %>
 </div>
+
