@@ -3,18 +3,45 @@
 <%= render @project %>
 
 <div>
-  <h2>Tasks</h2>
-  <ul>
-    <% @tasks.each do |task| %>
-      <li>
-        Task #<%= task.id %> - Status: <%= task.status %>
-      </li>
-    <% end %>
-  </ul>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</div>
+  <button><%= link_to "Edit this project", edit_project_path(@project) %></button>
+  <button><%= link_to "Add new task to this project", new_project_task_path(@project) %></button>
+  <div class="button"><%= button_to "Destroy this project", @project, method: :delete %></div>
 
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Add new task to this project", new_project_task_path(@project) %> |
-  <%= button_to "Destroy this project", @project, method: :delete %>
+<div>
+  <% if @tasks.any? %>
+
+  <strong>Tasks</strong>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Due Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.title %>
+          <% if task.due_date && task.status != "done" && task.due_date <= Time.current %>
+          <span class="badge text-bg-secondary">Overdue</span>
+          <% end %>
+          </td>
+          <td><%= task.status %></td>
+          <td><%= task.priority %></td>
+          <td><%= task.due_date %></td>
+          <td>View Edit Delete</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+
+
 
   <%= link_to "Back to projects", projects_path %>
 
