@@ -10,15 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_13_222927) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_13_233008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.datetime "created_at"
+    t.string "scope"
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.string "name", null: false
+    t.string "slug"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_projects_on_name", unique: true
+    t.index ["slug"], name: "index_projects_on_slug", unique: true
   end
+
+  create_table "tasks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.date "due_date"
+    t.integer "priority", default: 5, null: false
+    t.bigint "project_id", null: false
+    t.string "status", default: "todo", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.check_constraint "priority = ANY (ARRAY[1, 2, 3, 4, 5])", name: "tasks_priority_check"
+    t.check_constraint "status::text = ANY (ARRAY['todo'::character varying, 'in_progress'::character varying, 'done'::character varying]::text[])", name: "tasks_status_check"
+  end
+
+  add_foreign_key "tasks", "projects"
 end
