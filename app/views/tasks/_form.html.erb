@@ -1,0 +1,40 @@
+<%= form_with model: [@project, @task], local: true, data: { turbo: false } do |f| %>
+<% if f.object.errors.any? %>
+  <ul>
+    <% f.object.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+ 
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :description, style: "display: block" %>
+    <%= f.textarea :description %>
+  </div>  
+
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, Task::STATUSES.map { |s| [s.titleize, s] }, prompt: "Select status" %>
+  </div>  
+
+  <div>
+    <%= f.label :due_date%>
+    <%= f.date_select :due_date %>
+  </div>  
+
+  <div>
+    <%= f.label :priority%>
+    <%= f.select :priority, Task::VALID_PRIORITIES.map { |s| [s, s] }, prompt: "Select priority" %>
+  </div>  
+
+  <div>
+    <%= f.submit%>
+  </div>
+<% end %>

@@ -34,16 +34,49 @@
           <td><%= task.status %></td>
           <td><%= task.priority %></td>
           <td><%= task.due_date %></td>
-          <td>View Edit Delete</td>
+          <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>
+          <button><%= link_to "Edit", edit_project_task_path(@project, task) %></button>
+          <%= button_to "Delete", project_task_path(@project, task), method: :delete %></td>
+
+       
         </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><%= task.title%></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body container text-center">
+                <div class="row justify-content-center align-items-center g-2">
+                  <div class="col">Status: <%= task.status %></div>
+                  <div class="col">Priority: <%= task.priority %></div>
+                  <div class="col">Due Date: <%= task.due_date %></div>
+                </div>
+                <div class="row justify-content-center align-items-center g-2">
+                  <span>
+                    <%= task.description.inspect %>
+                  </span>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button><%= link_to "Edit", edit_project_task_path(@project, task) %></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       <% end %>
     </tbody>
   </table>
+
   <% end %>
+
 
 
 
   <%= link_to "Back to projects", projects_path %>
 
 </div>
-

@@ -1,44 +1,6 @@
 <h1>New Task for <%= @project.name %></h1>
 
-<%= form_with model: @task, url: project_tasks_path(@project), local: true, data: { turbo: false } do |f| %>
-<% if f.object.errors.any? %>
-  <ul>
-    <% f.object.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render "form", task: @task %>
 
-
- 
-  <div>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-
-  <div>
-    <%= f.label :description, style: "display: block" %>
-    <%= f.textarea :description %>
-  </div>  
-
-  <div>
-    <%= f.label :status %>
-    <%= f.select :status, Task::STATUSES.map { |s| [s.titleize, s] }, prompt: "Select status" %>
-  </div>  
-
-  <div>
-    <%= f.label :due_date%>
-    <%= f.date_select :due_date %>
-  </div>  
-
-  <div>
-    <%= f.label :priority%>
-    <%= f.select :priority, Task::VALID_PRIORITIES.map { |s| [s, s] }, prompt: "Select priority" %>
-  </div>  
-
-  <div>
-    <%= f.submit "Create Task" %>
-  </div>
-<% end %>
 
 <%= link_to "Back to Project", project_path(@project) %>

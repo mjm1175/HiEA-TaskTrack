@@ -1,4 +1,12 @@
-// Import and register all your controllers from the importmap via controllers/**/*_controller
-import { application } from "controllers/application"
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-eagerLoadControllersFrom("controllers", application)
+import { Application } from "@hotwired/stimulus"
+
+// Start Stimulus application
+const application = Application.start()
+
+// Register controllers manually if you have any
+// example:
+// import HelloController from "./hello_controller"
+// application.register("hello", HelloController)
+
+
+export { application }

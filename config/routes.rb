@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :projects do
-    resources :tasks, only: [ :new, :create ]
+    resources :tasks, only: [ :new, :create, :destroy, :edit, :update ]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
