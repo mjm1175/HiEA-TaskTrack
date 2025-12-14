@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_project
-  before_action :set_task, only: [:destroy, :edit, :update] 
+  before_action :set_task, only: [ :destroy, :edit, :update ]
 
   def new
     @task = @project.tasks.new

@@ -24,6 +24,10 @@ class ProjectsController < ApplicationController
     # update on friendly branch
     @project = Project.find(params[:id])
     @tasks = @project.tasks
+
+    if params[:status].present?
+      @tasks = @tasks.where(status: params[:status])
+    end
   end
 
   # GET /projects/new
