@@ -60,29 +60,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # Create new task
-  def new_task
-    @project = Project.find(params[:id])
-    @task = @project.tasks.new
-  end
-
-  # create task
-  def create_task
-    @project = Project.find(params[:id])
-    @task = @project.tasks.new(task_params)
-
-    if @task.save
-      redirect_to project_path(@project), notice: "Task created successfully."
-    else
-      render :new_task
-    end
-  end
-
   private
-
-    def task_params
-      params.require(:task).permit(:title, :description, :due_date, :status, :priority)
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_project
