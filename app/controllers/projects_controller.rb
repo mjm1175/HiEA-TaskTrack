@@ -3,7 +3,20 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    # IDK if its bad or "not rails-y" to query database direct... just seems faster for lg sets.
+    @projects = Project
+      .left_joins(:tasks)
+      .select(
+        "projects.*,
+        COUNT(tasks.id) AS tasks_count,
+        COUNT(
+          CASE
+            WHEN tasks.status IN ('todo', 'in_progress')
+            THEN 1
+          END
+        ) AS unf_tasks_count"
+      )
+      .group("projects.id")
   end
 
   # GET /projects/1 or /projects/1.json

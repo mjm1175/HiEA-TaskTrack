@@ -7,6 +7,17 @@
 <div id="projects">
   <% @projects.each do |project| %>
     <%= render project %>
+
+    <div>
+      <strong>Number of Tasks:</strong>
+      <%= project.tasks_count %>
+    </div>
+
+    <div>
+      <strong>Number of Unfinished Tasks:</strong>
+      <%= project.unf_tasks_count %>    
+    </div>
+
     <p>
       <%= link_to "View #{project.name}", project %>
     </p>
