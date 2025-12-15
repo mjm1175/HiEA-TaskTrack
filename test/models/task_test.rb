@@ -1,55 +1,118 @@
 require "test_helper"
 
 class TaskTest < ActiveSupport::TestCase
-  setup do
-    # Create a unique project for each test to avoid uniqueness violations
-    @project = Project.create!(name: "Project #{SecureRandom.hex(4)}")
+  # Setup a project to avoid uniqueness/association issues
+  def setup
+    @project = Project.create!(name: "Test Project #{SecureRandom.hex(4)}")
   end
 
-  test "valid with title, status, priority, and project" do
-    task = Task.new(title: "Test Task", status: "todo", priority: 3, project: @project)
+  # -----------------------
+  # Validations
+  # -----------------------
+
+  test "valid with all required attributes" do
+    task = Task.new(
+      title: "Sample Task",
+      status: "todo",
+      priority: 3,
+      project: @project
+    )
     assert task.valid?
   end
 
   test "invalid without title" do
-    task = Task.new(status: "todo", priority: 2, project: @project)
+    task = Task.new(
+      title: nil,
+      status: "todo",
+      priority: 3,
+      project: @project
+    )
     assert_not task.valid?
     assert_includes task.errors[:title], "can't be blank"
   end
 
-  test "invalid with status outside allowed values" do
-    task = Task.new(title: "Task", status: "invalid_status", priority: 2, project: @project)
+  test "invalid without status" do
+    task = Task.new(
+      title: "Task",
+      status: nil,
+      priority: 3,
+      project: @project
+    )
     assert_not task.valid?
     assert_includes task.errors[:status], "is not included in the list"
   end
 
-  test "invalid with priority <1 or >5" do
-    task = Task.new(title: "Task", status: "todo", priority: 0, project: @project)
+  test "invalid with status not in allowed list" do
+    task = Task.new(
+      title: "Task",
+      status: "waiting",
+      priority: 3,
+      project: @project
+    )
     assert_not task.valid?
+    assert_includes task.errors[:status], "is not included in the list"
+  end
 
-    task.priority = 6
+  test "invalid without priority" do
+    task = Task.new(
+      title: "Task",
+      status: "todo",
+      priority: nil,
+      project: @project
+    )
     assert_not task.valid?
+    assert_includes task.errors[:priority], "is not included in the list"
+  end
+
+  test "invalid with priority out of range" do
+    task_low = Task.new(title: "Task", status: "todo", priority: 0, project: @project)
+    task_high = Task.new(title: "Task", status: "todo", priority: 6, project: @project)
+    [ task_low, task_high ].each do |task|
+      assert_not task.valid?
+      assert_includes task.errors[:priority], "is not included in the list"
+    end
   end
 
   test "invalid without project" do
-    task = Task.new(title: "Task", status: "todo", priority: 3)
+    task = Task.new(title: "Task", status: "todo", priority: 3, project: nil)
     assert_not task.valid?
     assert_includes task.errors[:project], "must exist"
   end
 
-  test "#overdue? returns false if due_date in future" do
-    task = Task.new(title: "Future", status: "todo", priority: 3, project: @project, due_date: Date.tomorrow)
+  # -----------------------
+  # overdue? method
+  # -----------------------
+
+  test "#overdue? returns false for future due date" do
+    task = Task.new(
+      title: "Future",
+      status: "in_progress",
+      priority: 2,
+      project: @project,
+      due_date: Date.tomorrow
+    )
     assert_not task.overdue?
   end
 
-  test "#overdue? returns true if due_date past and status not done" do
-    task = Task.new(title: "Overdue", status: "in_progress", priority: 2, project: @project, due_date: Date.yesterday)
-    puts "DEBUG: Task due_date: #{task.due_date}, current date: #{Date.current}, status: #{task.status}, overdue?: #{task.overdue?}"
+  test "#overdue? returns true if due date past and status not done" do
+    task = Task.new(
+      title: "Overdue",
+      status: "in_progress",
+      priority: 2,
+      project: @project,
+      due_date: Date.yesterday
+    )
     assert task.overdue?
   end
 
-  test "#overdue? returns false if due_date past but status done" do
-    task = Task.new(title: "Done Task", status: "done", priority: 1, project: @project, due_date: Date.yesterday)
+  test "#overdue? returns false if due date past but status done" do
+    task = Task.new(
+      title: "Completed",
+      status: "done",
+      priority: 2,
+      project: @project,
+      due_date: Date.yesterday
+    )
     assert_not task.overdue?
   end
 end
