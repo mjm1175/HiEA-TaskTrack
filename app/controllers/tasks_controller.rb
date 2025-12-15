@@ -1,38 +1,24 @@
 class TasksController < ApplicationController
-  before_action :set_project, except: [ :index ]
+  before_action :set_project
   before_action :set_task, only: [ :destroy, :edit, :update, :show ]
   before_action :ensure_json_request, only: [ :index ]    # index route JSON only
 
   # json only route
   def index
-    Rails.logger.debug "TasksController#index called with params: #{params.inspect}"
+    @tasks = @project.tasks
 
-    @tasks = Task.all
-    Rails.logger.debug "Initial tasks count: #{@tasks.count}"
-
+    # Status filter
     if params[:status].present?
       @tasks = @tasks.with_status(params[:status])
-      Rails.logger.debug "Filtered tasks count: #{@tasks.count}"
     end
 
-    if params[:sort].present?
-      @tasks = @tasks.sorted_by(params[:sort])
-      Rails.logger.debug "Sorted tasks count: #{@tasks.count}"
+    # Overdue
+    if params[:overdue].present?
+      @tasks = @tasks.overdue if params[:overdue] == "true"
     end
 
     # Force JSON render
     render json: @tasks
-
-
-
-    # @tasks = Tasks.all
-
-    # # Status filter
-    # @tasks = @tasks.with_status(params[:status]) if params[:status].present?
-
-    # # TODO: overdue
-
-    # render json: @tasks
   end
 
   def show
