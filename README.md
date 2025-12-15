@@ -1,40 +1,37 @@
-Rails Version: 8.8.1
+# Rails Version: 8.8.1
 
 
-Setup steps:
-Install Ruby (version 3.4.7)
+# Setup steps:
+- Install Ruby (version 3.4.7)
 
-# Install JavaScript dependencies
-Install node (version 24.11.1), yarn (version 1.22.22)
+- Install JavaScript dependencies: Install node (version 24.11.1), yarn (version 1.22.22)
 
-RUN bundle install
+- RUN `bundle install`
 
-# Install node modules
-RUN yarn install --immutable
+- Install node modules: RUN `yarn install --immutable`
 
-RUN rm -rf node_modules
+- RUN `rm -rf node_modules`
 
-# Load assets for bootstrap reasons
-RUN rails precompile:assets 
+- Load assets for bootstrap reasons: RUN `rails precompile:assets `
 
-RUN rails s
+- RUN `rails s`
 
-OPEN: localhost:3000/projects or /projects
+- OPEN: localhost:3000/projects or /projects
 
 
-How to run tests:
-RUN rails test
+# How to run tests:
+RUN `rails test`
 
 
-Example API requests (with query parameters).
-GET /api/projects/1/tasks
-GET /api/projects/1/tasks?status=todo
-GET /api/projects/1/tasks?overdue=true
-GET /api/projects/1/tasks?status=in_progress&overdue=true
-GET /api/projects/1/tasks?status=done
+# Example API requests (with query parameters).
+- GET /api/projects/1/tasks
+- GET /api/projects/1/tasks?status=todo
+- GET /api/projects/1/tasks?overdue=true
+- GET /api/projects/1/tasks?status=in_progress&overdue=true
+- GET /api/projects/1/tasks?status=done
 
 
-Any notes on tradeoffs, shortcuts, or things you would improve with more time:
+# Any notes on tradeoffs, shortcuts, or things you would improve with more time:
 
 Assumptions: 
 - Assuming default value of Task.status=todo and Task.priority=5. Reflected in form but shouldn’t be used outside of there. 
