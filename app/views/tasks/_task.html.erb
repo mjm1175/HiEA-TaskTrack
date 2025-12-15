@@ -1,7 +1,7 @@
 <div id="<%= dom_id task %>">
   <tr>
     <td><%= task.title %>
-    <% if task.due_date && task.status != "done" && task.due_date <= Time.current %>
+    <% if task.overdue? %>
     <span class="badge text-bg-secondary">Overdue</span>
     <% end %>
     </td>

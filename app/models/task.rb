@@ -12,4 +12,9 @@ class Task < ApplicationRecord
   VALID_PRIORITIES = (1..5).to_a
 
   validates :priority, presence: true, inclusion: { in: VALID_PRIORITIES }
+
+  # Instance method
+  def overdue?
+    due_date.present? && due_date < Date.today && status != "done"
+  end
 end

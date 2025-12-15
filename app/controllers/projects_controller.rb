@@ -28,6 +28,17 @@ class ProjectsController < ApplicationController
     if params[:status].present?
       @tasks = @tasks.where(status: params[:status])
     end
+
+    if params[:sort].present?
+      # Asc/desc switched because lowest date is the soonest & lowest priority is the highest.
+      order_clause = case params[:sort]
+      when "priority_desc" then { priority: :asc }
+      when "priority_asc"  then { priority: :desc }
+      when "due_desc"  then { due_date: :asc }
+      when "due_asc"  then { due_date: :desc }
+      end
+      @tasks = @tasks.order(order_clause) if order_clause
+    end
   end
 
   # GET /projects/new
