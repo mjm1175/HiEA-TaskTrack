@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   resources :projects do
     resources :tasks, only: [ :new, :create, :destroy, :edit, :update ]
-    resources :tasks, only: [ :index ], defaults: { format: :json }
+  end
+
+  namespace :api do
+    resources :projects, only: [] do
+      resources :tasks, only: [ :index ]
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

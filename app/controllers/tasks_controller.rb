@@ -1,25 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_project
   before_action :set_task, only: [ :destroy, :edit, :update, :show ]
-  before_action :ensure_json_request, only: [ :index ]    # index route JSON only
-
-  # json only route
-  def index
-    @tasks = @project.tasks
-
-    # Status filter
-    if params[:status].present?
-      @tasks = @tasks.with_status(params[:status])
-    end
-
-    # Overdue
-    if params[:overdue].present?
-      @tasks = @tasks.overdue if params[:overdue] == "true"
-    end
-
-    # Force JSON render
-    render json: @tasks
-  end
 
   def show
     @task = Task.find(params[:id])
@@ -85,11 +66,5 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :status, :due_date, :priority)  # add other fields as needed
-  end
-
-  def ensure_json_request
-    Rails.logger.debug "ensure_json_request called, format: #{request.format}"
-    return if request.format.json?
-    render json: { error: "JSON requests only" }, status: 406
   end
 end
