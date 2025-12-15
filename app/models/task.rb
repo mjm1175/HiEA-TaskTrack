@@ -15,7 +15,7 @@ class Task < ApplicationRecord
 
   # Class method (so logic is only written once)
   def self.overdue_query
-    where("due_date IS NOT NULL AND due_date < ? AND status != ?", Time.current, "done")
+    where("due_date IS NOT NULL AND due_date < ? AND status != ?", Date.current, "done")
   end
 
   # Instance method

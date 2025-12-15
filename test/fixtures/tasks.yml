@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
-  status: MyString
+  title: Task One
+  description: Description for Task One
+  status: todo
   due_date: 2025-12-13
   priority: 1
   project: one
 
 two:
-  title: MyString
-  description: MyText
-  status: MyString
+  title: Task Two
+  description: Description for Task Two
+  status: in_progress
   due_date: 2025-12-13
-  priority: 1
+  priority: 2
   project: two
