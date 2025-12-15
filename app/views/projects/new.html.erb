@@ -1,5 +1,13 @@
 <% content_for :title, "New project" %>
 
+<div class="container">
+  <%= link_to "<< Back to projects", projects_path %>
+
+    <div class="column">
+        <div class="row">
+
+
+
 <h1>New project</h1>
 
 <%= render "form", project: @project %>
@@ -7,5 +15,8 @@
 <br>
 
 <div>
-  <%= link_to "Back to projects", projects_path %>
+  <%= link_to "<< Back to projects", projects_path %>
+</div>
+</div>
+</div>
 </div>

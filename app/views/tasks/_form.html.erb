@@ -1,40 +1,44 @@
 <%= form_with model: [@project, @task], local: true, data: { turbo: false } do |f| %>
 <% if f.object.errors.any? %>
-  <ul>
-    <% f.object.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+      <div class="alert alert-danger" role="alert">
+
+<%= pluralize(f.object.errors.count, "error") %> prohibited this project from being saved:
+
+<ul>
+    <% f.object.errors.each do |error| %>
+    <li><%= error.full_message %></li>
     <% end %>
-  </ul>
+</ul>
+</div>
 <% end %>
 
 
- 
-  <div>
+
+<div>
     <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
+    <%= f.text_field :title, class: "form-control" %>
+</div>
 
-  <div>
+<div>
     <%= f.label :description, style: "display: block" %>
-    <%= f.textarea :description %>
-  </div>  
+    <%= f.textarea :description, class: "form-control"  %>
+</div>
 
-  <div>
+<div>
     <%= f.label :status %>
-    <%= f.select :status, Task::STATUSES.map { |s| [s.titleize, s] }, prompt: "Select status" %>
-  </div>  
+    <%= f.select :status, Task::STATUSES.map { |s| [s.titleize, s] }, prompt: "Select status", class: "btn btn-light dropdown-toggle"  %>
+</div>
 
-  <div>
+<div>
     <%= f.label :due_date%>
-    <%= f.date_select :due_date %>
-  </div>  
+    <%= f.date_select :due_date, class: "form-control"  %>
+</div>
 
-  <div>
+<div>
     <%= f.label :priority%>
-    <%= f.select :priority, Task::VALID_PRIORITIES.map { |s| [s, s] }, prompt: "Select priority" %>
-  </div>  
+    <%= f.select :priority, Task::VALID_PRIORITIES.map { |s| [s, s] }, prompt: "Select priority", class: "btn btn-light dropdown-toggle"  %>
+</div>
 
-  <div>
-    <%= f.submit%>
-  </div>
+<%= f.submit%>
+</div>
 <% end %>

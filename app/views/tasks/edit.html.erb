@@ -1,11 +1,21 @@
 <% content_for :title, "Editing task" %>
 
-<h1>Editing task</h1>
+<div class="container">
+                <%= link_to "<< Back to project", project_path(@project) %>
 
-<%= render "form", task: @task %>
+    <div class="column">
+        <div class="row">
 
-<br>
+            <h1>Editing task</h1>
 
-<div>
-  <%= link_to "Back to project", project_path(@project) %>
+            <%= render "form", task: @task %>
+
+            <br>
+
+            <div>
+                <%= link_to "<< Back to project", project_path(@project) %>
+            </div>
+
+        </div>
+    </div>
 </div>

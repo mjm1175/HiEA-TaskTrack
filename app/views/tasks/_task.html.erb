@@ -2,15 +2,15 @@
   <tr>
     <td><%= task.title %>
     <% if task.overdue? %>
-    <span class="badge text-bg-secondary">Overdue</span>
+    <span class="badge text-bg-danger">Overdue</span>
     <% end %>
     </td>
     <td><%= task.status %></td>
     <td><%= task.priority %></td>
     <td><%= task.due_date %></td>
-    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>
-    <button><%= link_to "Edit", edit_project_task_path(@project, task) %></button>
-    <%= button_to "Delete", project_task_path(@project, task), method: :delete %></td>
+    <td><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button>
+    <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn btn-secondary" %>
+    <%= button_to "Delete", project_task_path(@project, task), method: :delete, class: "btn btn-secondary" %></td>
 
   
   </tr>
