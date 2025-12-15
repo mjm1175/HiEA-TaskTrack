@@ -17,12 +17,14 @@
                     </div>
 
                     <div>
+                    <% if task.description.present? %>
                         <details>
                             <summary class="view-link">View</summary>
                             <div class="task-description">
                                 Task Description: <%= task.description %>
                             </div>
                         </details>
+                        <% end %>
                     </div>
                 </div>
             </div>

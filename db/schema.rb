@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_13_233008) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_15_041830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,8 +46,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_13_233008) do
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.check_constraint "priority = ANY (ARRAY[1, 2, 3, 4, 5])", name: "tasks_priority_check"
-    t.check_constraint "status::text = ANY (ARRAY['todo'::character varying::text, 'in_progress'::character varying::text, 'done'::character varying::text])", name: "tasks_status_check"
+    t.check_constraint "status::text = ANY (ARRAY['todo'::character varying, 'in_progress'::character varying, 'done'::character varying]::text[])", name: "tasks_status_check"
   end
 
-  add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "projects", on_delete: :cascade
 end
