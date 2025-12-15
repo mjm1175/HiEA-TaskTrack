@@ -1,17 +1,17 @@
 <div class="container">
-                <%= link_to "<< Back to project", project_path(@project) %>
+    <%= link_to "<< Back to project", project_path(@project) %>
 
     <div class="column">
         <div class="row">
 
 
-<h1>New Task for <%= @project.name %></h1>
+            <h1>New Task for <%= @project.name %></h1>
 
-<%= render "form", task: @task %>
+            <%= render "form", task: @task %>
 
 
-<%= link_to "<< Back to Project", project_path(@project) %>
+            <%= link_to "<< Back to Project", project_path(@project) %>
 
-</div>
-</div>
+        </div>
+    </div>
 </div>

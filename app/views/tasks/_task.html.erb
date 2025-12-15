@@ -17,17 +17,13 @@
                     </div>
 
                     <div>
+                        <!-- Carrot/dropdown reveal tab for view button to display task description -->
                         <details>
                             <summary class="view-link">View</summary>
                             <div class="task-description">
-
-                                Task Description: 
-                                <% if task.description.present? %>
-                                
-                                  <%= task.description %>
-                                <% else %>
-                                  None
-                                <% end %>
+                                <!-- "None" if no description instead of blank -->
+                                Task Description:
+                                <p><%= task.description.present? ? task.description : "None" %></p>
                             </div>
                         </details>
                     </div>

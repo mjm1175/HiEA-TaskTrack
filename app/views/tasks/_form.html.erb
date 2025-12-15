@@ -1,14 +1,12 @@
-<%= form_with model: [@project, @task], local: true, data: { turbo: false } do |f| %>
+<%= form_with model: [@project, @task], local: true, data: { turbo: false } do |f| %>     <!-- Using turbo: false here because errors don't show up otherwise, would replace with a precise turbo stream -->
 <% if f.object.errors.any? %>
-      <div class="alert alert-danger" role="alert">
-
-<%= pluralize(f.object.errors.count, "error") %> prohibited this project from being saved:
-
-<ul>
-    <% f.object.errors.each do |error| %>
-    <li><%= error.full_message %></li>
-    <% end %>
-</ul>
+<div class="alert alert-danger" role="alert">
+    <%= pluralize(f.object.errors.count, "error") %> prohibited this project from being saved:
+    <ul>
+        <% f.object.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+        <% end %>
+    </ul>
 </div>
 <% end %>
 
