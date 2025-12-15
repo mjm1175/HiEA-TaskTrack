@@ -13,25 +13,25 @@
 
 
 <div>
+  <div id="tasks-filter">
+    <%= form_with url: project_path(@project), method: :get, local: true do %>
+    <!-- filter -->
+      <label for="status">Filter:</label>
+      <%= select_tag :status, 
+          options_for_select(Task::STATUSES, params[:status]),
+          include_blank: "All",
+          onchange: "this.form.submit()"%>
+
+    <!-- sort -->
+      <label for="sort">Sort by:</label>
+      <%= select_tag :sort,
+          options_for_select([["Priority (high → low)", "priority_desc"], ["Priority (low → high)", "priority_asc"], ["Due Date (soonest → latest)", "due_asc"], ["Due Date (latest → soonest)", "due_desc"]], params[:sort]),
+          include_blank: "Default",
+          onchange: "this.form.submit()" %>
+    <% end %>
+  </div>  
+
   <% if @tasks.any? %>
-    <div id="tasks-filter">
-      <%= form_with url: project_path(@project), method: :get, local: true do %>
-      <!-- filter -->
-        <label for="status">Filter:</label>
-        <%= select_tag :status, 
-            options_for_select(Task::STATUSES, params[:status]),
-            include_blank: "All",
-            onchange: "this.form.submit()"%>
-
-      <!-- sort -->
-        <label for="sort">Sort by:</label>
-        <%= select_tag :sort,
-            options_for_select([["Priority (high → low)", "priority_desc"], ["Priority (low → high)", "priority_asc"], ["Due Date (soonest → latest)", "due_desc"], ["Due Date (latest → soonest)", "due_asc"]], params[:sort]),
-            include_blank: "Default",
-            onchange: "this.form.submit()" %>
-      <% end %>
-    </div>  
-
     <div>
       <strong>Tasks</strong>
       <table class="table" >
